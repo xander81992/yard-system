@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Yard Login</title>
-<link rel="stylesheet" href="styles.css">
+  <title>Yard Login</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -23,14 +23,20 @@
 </div>
 
 <script type="module">
-import { loginUser } from "./auth.js";
+  import { loginUser } from "./auth.js";
 
-window.login = function () {
-  loginUser(
-    document.getElementById("email").value,
-    document.getElementById("password").value
-  );
-};
+  // Make login() available for the button
+  window.login = async function () {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    try {
+      await loginUser(email, password);
+      alert("Login successful");
+    } catch (err) {
+      alert(err.message);
+    }
+  };
 </script>
 
 </body>
