@@ -1,31 +1,21 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "./firebase.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 export async function loginUser(email, password) {
   try {
-    const userCred = await signInWithEmailAndPassword(auth, email, password);
-
-    const ref = doc(db, "users", userCred.user.uid);
-    const snap = await getDoc(ref);
-
-    if (!snap.exists()) {
-      alert("No role assigned");
-      return;
-    }
-
-    const user = snap.data();
-
-    if (user.status !== "active") {
-      alert("Account pending approval");
-      return;
-    }
-
-    if (user.role === "admin") window.location.href = "admin.html";
-    if (user.role === "shunter") window.location.href = "shunter.html";
-    if (user.role === "customer") window.location.href = "customer.html";
-
-  } catch (err) {
-    alert(err.message);
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    alert("Login success: " + result.user.email);
+  } catch (error) {
+    alert(error.message);
   }
 }
