@@ -23,7 +23,7 @@
 </div>
 
 <script type="module">
- import { loginUser } from "./auth.js";
+  import { loginUser } from "./auth.js";
 
   window.login = async function () {
     const email = document.getElementById("email").value;
@@ -31,7 +31,10 @@
 
     try {
       await loginUser(email, password);
-      alert("Login successful");
+
+      // ✅ go to next page after login
+      window.location.href = "./dashboard.html";
+
     } catch (err) {
       alert(err.message);
     }
