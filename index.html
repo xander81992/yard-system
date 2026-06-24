@@ -23,9 +23,8 @@
 </div>
 
 <script type="module">
-  import { loginUser } from "./auth.js";
+ import { loginUser } from "./auth.js";
 
-  // Make login() available for the button
   window.login = async function () {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
